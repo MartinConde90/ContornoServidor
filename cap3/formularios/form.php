@@ -20,10 +20,10 @@ require_once("Alumno.php");
     else{
         ?>
         <form action="form.php" method="post">
-        <input name="nombre" type="text">
-        <input name="apellidos" type="text">
-        <input name="nif" type="text">
-        <input name="sexo" type="text">
+        <input name="nombre" type="text" placeholder="Nombre">
+        <input name="apellidos" type="text" placeholder="Apellidos">
+        <input name="nif" type="text" placeholder="NIF">
+        <input name="sexo" type="text" placeholder="Sexo">
         <input name="enviar" type="submit">
     </form>
     <?php
