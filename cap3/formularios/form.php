@@ -39,7 +39,19 @@ require_once("Alumno.php");
         
     }
     else{
+<<<<<<< HEAD
         include_once("formulario.php");
+=======
+        ?>
+        <form action="form.php" method="post">
+        <input name="nombre" type="text" placeholder="Nombre">
+        <input name="apellidos" type="text" placeholder="Apellidos">
+        <input name="nif" type="text" placeholder="NIF">
+        <input name="sexo" type="text" placeholder="Sexo">
+        <input name="enviar" type="submit">
+    </form>
+    <?php
+>>>>>>> afb7b6f3ec3a1f63b938c22e254932015e4e1452
     }
     ?>
 </body>

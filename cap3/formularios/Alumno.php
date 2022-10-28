@@ -14,13 +14,21 @@ class Alumno{
         $this->sexo = $sexo;   
     }
 
+<<<<<<< HEAD
     function getNif(){
+=======
+    function Nif(){
+>>>>>>> afb7b6f3ec3a1f63b938c22e254932015e4e1452
         $prueba = new Nif($this->NIF);
         return $prueba->comprobar();  
     }
 
     function __toString(){
+<<<<<<< HEAD
         if($this->getNif()){
+=======
+        if($this->Nif()){
+>>>>>>> afb7b6f3ec3a1f63b938c22e254932015e4e1452
             return "Nombre: ". $this->nombre ."<br>". " Apellidos: ". $this->apellidos ."<br>". " NIF: ". $this->NIF ."<br>"." Sexo: ". $this->sexo;
         }
         else{
