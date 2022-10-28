@@ -13,20 +13,33 @@ require_once("Alumno.php");
 </head>
 <body>
     <?php
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        if($_SERVER["REQUEST_METHOD"] == "POST"){
         $alumno = new Alumno($_POST['nombre'],$_POST['apellidos'],$_POST['nif'],$_POST['sexo']);
-        echo $alumno;
+
+        if($alumno->getNif()){
+            echo $alumno;
+        }
+        else{
+            ?>
+            <p>NIF incorrecto</p>
+            <form action="form.php" method="post">
+            <input name="nombre" type="text" placeholder="Nombre">
+            <input name="apellidos" type="text" placeholder="Apellidos">
+            <input name="nif" type="text" placeholder="NIF">
+            <label for="sexo">Sexo</label>
+            <select name="sexo" id="sexo">
+                <option value="mujer">mujer</option>
+                <option value="hombre">hombre</option>
+                <option value="otro">otro</option>
+            </select>
+            <input name="enviar" type="submit">
+            </form>
+            <?php
+        }
+        
     }
     else{
-        ?>
-        <form action="form.php" method="post">
-        <input name="nombre" type="text">
-        <input name="apellidos" type="text">
-        <input name="nif" type="text">
-        <input name="sexo" type="text">
-        <input name="enviar" type="submit">
-    </form>
-    <?php
+        include_once("formulario.php");
     }
     ?>
 </body>

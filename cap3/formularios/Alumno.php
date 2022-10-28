@@ -1,4 +1,5 @@
 <?php
+require_once("Nif.php");
 
 class Alumno{
     private $nombre;
@@ -13,7 +14,18 @@ class Alumno{
         $this->sexo = $sexo;   
     }
 
+    function getNif(){
+        $prueba = new Nif($this->NIF);
+        return $prueba->comprobar();  
+    }
+
     function __toString(){
-        return "Nombre: ". $this->nombre ."<br>". " Apellidos: ". $this->apellidos ."<br>". " NIF: ". $this->NIF ."<br>"." Sexo: ". $this->sexo;
+        if($this->getNif()){
+            return "Nombre: ". $this->nombre ."<br>". " Apellidos: ". $this->apellidos ."<br>". " NIF: ". $this->NIF ."<br>"." Sexo: ". $this->sexo;
+        }
+        else{
+            return "NIF erroneo";
+        }
+        
     }
 }
