@@ -18,15 +18,16 @@ if($_SESSION["contador"]==0){
 }
 
 if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["color"])){
-    $color = $_POST["color"];
-    $_SESSION["color"]=$color;
+    
     //setcookie("color",$color,time()+3600);
-     
+    $color = $_POST["color"];
     //contador
-    if(isset($_SESSION["color"]) && $_SESSION["color"]!= $color ){
+    if($_SESSION["color"]!= $color ){
         $contador++;
         setcookie("contador",$contador,time()+3600);
     }
+    
+    $_SESSION["color"]=$color;
 
 }else{
     if(isset($_SESSION["color"])){
