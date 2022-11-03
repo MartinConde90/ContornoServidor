@@ -4,6 +4,7 @@ $color = "#FFF";
 if(isset($_COOKIE["contador"])){
     $contador = $_COOKIE["contador"];
 }
+
 if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["color"])){
     $color = $_POST["color"];
     setcookie("color",$color,time()+3600);

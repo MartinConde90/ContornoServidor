@@ -1,33 +1,35 @@
 <?php
-session_start();
-
-
 $mensaje = "";
-if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["numero"]) && isset($_SESSION["contador"]) && $_SESSION["contador"]>0){
-    $_SESSION["contador"]--;
-    array_push($_SESSION["historial"],$_POST["numero"]);
+$contador = 5;
+$random = rand(0, 100);
+if(isset($_COOKIE["contador"])){
+    $contador = $_COOKIE["contador"];
+}
 
-    if($_SESSION["random"]==$_POST["numero"]){
+if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["numero"]) && isset($_COOKIE["contador"]) && $_COOKIE["contador"]>0){
+    $contador--;
+    setcookie("contador",$contador,time()+3600);
+
+    if($_COOKIE["random"]==$_POST["numero"]){
         $mensaje = "Has acertado";
-        session_destroy();
+        setcookie("contador", "", time()-3600);
     }
-    if($_SESSION["random"]>$_POST["numero"]){
+    if($_COOKIE["random"]>$_POST["numero"]){
         $mensaje = "El número es mayor";
     }
-    if($_SESSION["random"]<$_POST["numero"]){
+    if($_COOKIE["random"]<$_POST["numero"]){
         $mensaje = "El número es menor";
     }
 }
-if(isset($_SESSION["contador"]) && $_SESSION["contador"]==0){
+if(isset($_COOKIE["contador"]) && $_COOKIE["contador"]==0){
     $mensaje = "Has perdido";
-    session_destroy();
+    setcookie("contador", "", time()-3600);
 }
 
-if(!isset($_SESSION["contador"])){
-    $_SESSION["contador"] = 5;
-    $_SESSION["random"] = rand(0, 100);
+if(!isset($_COOKIE["contador"])){
+    setcookie("contador",$contador,time()+3600);
+    setcookie("random",$random,time()+3600);
     $mensaje = "Introduce un numero";
-    $_SESSION["historial"] = array();
 }
 
 ?>
@@ -42,13 +44,9 @@ if(!isset($_SESSION["contador"])){
 </head>
 <body>
     <p>Adivina el número</p>
-    <p>Intentos: <?php echo $_SESSION["contador"]; ?> <br> <?php echo $mensaje;?> </p>
-    <p>Números intentados: <?php 
-                            echo implode(", ",  $_SESSION["historial"]);
-                            ?>
-    </p>
+    <p>Intentos: <?php echo $contador ?> <br> <?php echo $mensaje;?> </p>
     <?php 
-        if($_SESSION["contador"]>0 && $mensaje != "Has acertado"){
+        if($contador>0 && $mensaje != "Has acertado"){
             ?>
 
             <form action="" method="post">
