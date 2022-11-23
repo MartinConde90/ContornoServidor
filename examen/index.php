@@ -17,6 +17,7 @@ $partidas_ganadas = 0; //Partidas ganadas por el jugador
 
 //Código que necesites incluir y no este definido --> (0,25 puntos)
 session_start();
+ini_set('display_errors','Off');
 //-------
 //Funciones necesarias para desarrollar el juego
 /**
@@ -176,18 +177,12 @@ if(!isset($_SESSION["letras"])){
 
 cargarestadojuego($palabra, $palabra_oculta, $letras, $vidas, $partidas_jugadas, $partidas_ganadas);
 
-if(count($_SESSION["letras"])==0){
-    
-    $partidas_jugadas = $_COOKIE["contadorjugadas"];
-    $partidas_jugadas++;
-    setcookie("contadorjugadas",$partidas_jugadas,time()+3600*24*360);
 
-}
 
 if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["letra"]) && isset($_SESSION["letras"]) && $_SESSION["vidas"]>0 && $_SESSION["palabra"]!=$_SESSION["oculta"]){
     
     array_push($_SESSION["letras"],strtoupper($_POST["letra"]));
-    echo(count($_SESSION["letras"]));
+
 
     $palabra = $_SESSION["palabra"];
     $palabra_oculta = $_SESSION["oculta"];
@@ -200,6 +195,19 @@ if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["letra"]) && isset($_SESSI
     $_SESSION["oculta"] = $palabra_oculta;
 
 }
+
+
+if(count($_SESSION["letras"])==0){
+    echo(count($_SESSION["letras"]));
+    $partidas_jugadas = $_COOKIE["contadorjugadas"];
+    $partidas_jugadas++;
+    setcookie("contadorjugadas",$partidas_jugadas,time()+3600*24*360);
+    
+}
+
+
+
+
 if($_SESSION["vidas"]==0){
     $mensaje = "Fin de la partida";
 }
