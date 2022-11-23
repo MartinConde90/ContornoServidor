@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 
 
 //Variables
@@ -16,7 +16,7 @@ $partidas_jugadas = 0;  //Partidas totales jugadas por el jugador
 $partidas_ganadas = 0; //Partidas ganadas por el jugador
 
 //Código que necesites incluir y no este definido --> (0,25 puntos)
-
+session_start();
 //-------
 //Funciones necesarias para desarrollar el juego
 /**
@@ -34,8 +34,8 @@ $partidas_ganadas = 0; //Partidas ganadas por el jugador
     $contador = 0;
 
     for($i=0; $i<strlen($palabra); $i++){
-        $letrapos = substr($palabra, $i,1);
-        if($letrapos == $letra){
+        //$letrapos = substr($palabra, $i,1);
+        if($palabra[$i] ==  strtoupper($letra)){
             $posiciones[] = $i;
             $contador++;
         }
@@ -65,8 +65,8 @@ function colocarLetras($palabra_oculta, $posiciones, $letra){
     $palabranew = $palabra_oculta;
     if($posiciones!=false){
         for($i=0; $i<count($posiciones); $i++){
-        
-            $palabranew = substr_replace($palabranew, $letra, $posiciones[$i], 1);
+            //$palabranew = substr_replace($palabranew, $letra, $posiciones[$i], 1);
+            $palabranew[$posiciones[$i]]= strtoupper($letra);
         } 
     }
     
@@ -87,12 +87,33 @@ function colocarLetras($palabra_oculta, $posiciones, $letra){
  * @return void
  */
 
+function cargarestadojuego(&$palabra, &$palabra_oculta, &$letras, &$vidas, &$partidas_jugadas, &$partidas_ganadas){
+    $palabra = $_SESSION["palabra"];
+    $palabra_oculta = $_SESSION["oculta"];
+    $letras = $_SESSION["letras"];
+    $vidas = $_SESSION["vidas"];
+    $partidas_jugadas = $_COOKIE["contadorjugadas"];
+    $partidas_ganadas = $_COOKIE["contadorganadas"];
+}
 
+/**
+ * guardarestadojuego
+ * 
+ * Guarda el estado de la partida para que se pueda continuar el juego en la próxima llamada a la página
+ * (0,5 puntos)
+ * @param  mixed $palabra palabra a adivinar por el jugador
+ * @param  mixed $palabra_oculta  palabra con la longitud de la $palabra que contiene _ en lugar de las letras
+ * @param  mixed $letras letras jugadas por el jugador en la partida actual
+ * @param  mixed $vidas vidas que le restan al jugador en la partida actual
+ * @return void
+ */
 
-
-
-
-
+function guardarestadojuego($palabra,$palabra_oculta,$letras,$vidas){
+    $_SESSION["palabra"] = $palabra;
+    $_SESSION["oculta"] = $palabra_oculta;
+    $_SESSION["letras"] = $letras;
+    $_SESSION["vidas"] = $vidas;
+}
 
 /**
  * iniciarjuego
@@ -121,10 +142,8 @@ function iniciarjuego(&$palabra,&$palabra_oculta,&$letras,&$vidas,&$partidas_jug
     
     $letras = 0;
     $vidas = 7;
-    $partidas_jugadas = 0;
-    $partidas_ganadas = 0;
     $_SESSION["ganar"] = $ganar;
-    $palabra = PALABRAS[array_rand(PALABRAS)];
+    $palabra = strtoupper(PALABRAS[array_rand(PALABRAS)]);
     $palabra_oculta = "";
     $_SESSION["oculta"] = $palabra_oculta;
 
@@ -141,35 +160,10 @@ function iniciarjuego(&$palabra,&$palabra_oculta,&$letras,&$vidas,&$partidas_jug
 
 
 
-
-
-/**
- * guardarestadojuego
- * 
- * Guarda el estado de la partida para que se pueda continuar el juego en la próxima llamada a la página
- * (0,5 puntos)
- * @param  mixed $palabra palabra a adivinar por el jugador
- * @param  mixed $palabra_oculta  palabra con la longitud de la $palabra que contiene _ en lugar de las letras
- * @param  mixed $letras letras jugadas por el jugador en la partida actual
- * @param  mixed $vidas vidas que le restan al jugador en la partida actual
- * @return void
- */
-
-    function guardarestadojuego($palabra,$palabra_oculta,$letras,$vidas){
-        $_SESSION["palabra"] = $palabra;
-        $_SESSION["oculta"] = $palabra_oculta;
-        $_SESSION["letras"] = $letras;
-        $_SESSION["vidas"] = $vidas;
-    }
-
-
-
 //Control del juego (2,25 puntos)
 /*
 Utiliza aquí las funciones creadas anteriormente y haz que el juego funcione
 */
-
-
 
 if(!isset($_SESSION["letras"])){
     $_SESSION["letras"] = array();
@@ -180,25 +174,25 @@ if(!isset($_SESSION["letras"])){
     $mensaje= "Salva al monigote";
 }
 
+cargarestadojuego($palabra, $palabra_oculta, $letras, $vidas, $partidas_jugadas, $partidas_ganadas);
+
 if(count($_SESSION["letras"])==0){
-    if(!isset($_COOKIE["contadorjugadas"])){
-        $partidas_jugadas = 0;
-    }
-    else{$partidas_jugadas = $_COOKIE["contadorjugadas"];}
     
+    $partidas_jugadas = $_COOKIE["contadorjugadas"];
     $partidas_jugadas++;
     setcookie("contadorjugadas",$partidas_jugadas,time()+3600*24*360);
 
 }
 
 if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["letra"]) && isset($_SESSION["letras"]) && $_SESSION["vidas"]>0 && $_SESSION["palabra"]!=$_SESSION["oculta"]){
-
-    array_push($_SESSION["letras"],$_POST["letra"]);
+    
+    array_push($_SESSION["letras"],strtoupper($_POST["letra"]));
+    echo(count($_SESSION["letras"]));
 
     $palabra = $_SESSION["palabra"];
     $palabra_oculta = $_SESSION["oculta"];
     
-    $palabra_oculta= colocarLetras($palabra_oculta,posicionesLetra($palabra,$_POST["letra"]),$_POST["letra"]);
+    $palabra_oculta= colocarLetras($palabra_oculta,posicionesLetra($palabra,$_POST["letra"]),strtoupper($_POST["letra"]));
     if($palabra_oculta == $_SESSION["oculta"]){
         $mensaje = "Letra incorrecta";
         $_SESSION["vidas"]--;
@@ -212,6 +206,9 @@ if($_SESSION["vidas"]==0){
 if($_SESSION["palabra"]==$_SESSION["oculta"]){
     $_SESSION["ganar"]=true;
     $mensaje= "HAS GANADO";
+    $partidas_ganadas = $_COOKIE["contadorganadas"];
+    $partidas_ganadas++;
+    setcookie("contadorganadas",$partidas_ganadas,time()+3600*24*360);
 }
 
 
@@ -232,7 +229,7 @@ if($_SESSION["palabra"]==$_SESSION["oculta"]){
 <body>
     <div>Mensajes: <?= $mensaje ?> </div>
     <div>Letras jugadas: <?= implode(", ",  $_SESSION["letras"]); ?></div>
-    <div>Palabra: <?= $_SESSION["oculta"]?>  Longitud: <?= strlen($palabra_oculta)?></div>
+    <div>Palabra: <?= $_SESSION["oculta"]?>  Longitud: <?= strlen($_SESSION["oculta"])?></div>
     <div>Vidas: <?= $_SESSION["vidas"]?></div>
     <form action="" method="post">
         <input type="text" name="letra" id="letra">
