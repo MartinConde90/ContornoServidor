@@ -14,8 +14,6 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" &&
     $enviar->enviar($email);
 }
 
-
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -28,11 +26,11 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" &&
         <p>Email de prueba</p>
     </div>
     <form action="index.php" method="post">
-        <input type="text" name="emisor"  autofocus placeholder="emisor">
+        <input type="text" name="emisor"  autofocus placeholder="emisor" style="background-color:orange;">
         <br>
-        <input type="text" name="asunto"  autofocus placeholder="asunto">
+        <input type="text" name="asunto"  autofocus placeholder="asunto" style="background-color:pink;">
         <br>
-        <textarea  name="mensaje" rows="4" cols="50" autofocus placeholder="Introduce tu mensaje"></textarea>
+        <textarea  name="mensaje" rows="4" cols="50" autofocus placeholder="Introduce tu mensaje" style="background-color:blue;"></textarea>
         <br>
         <input type="submit" name="submit">
     </form>
