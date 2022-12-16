@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["correo"])&& isset($_POS
     catch(Exception $e){
         echo "Error";
     }
-    
+    header("location:tablaUsuarios.php");
 }
 
 

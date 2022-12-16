@@ -21,6 +21,9 @@ $usuarios = $stm->fetchAll();
         td {
             border: 1px solid;
         }
+        a {
+            text-decoration:none;
+        }
     </style>
 </head>
 <body>
@@ -33,12 +36,17 @@ $usuarios = $stm->fetchAll();
                         <td><?php echo $valor["nombre"]?></td>
                         <td><?php echo $valor["apellidos"]?></td>
                         <td><?php echo $valor["email"]?></td>
+                        <td><a  href="modificar.php?id=<?= $valor["idusuario"]?>">Modificar usuario</a></td>
+                        <td><a  href="delete.php?id=<?= $valor["idusuario"]?>">Eliminar usuario</a></td>
                     </tr>
                 <?php
                 }
             ?>
         
     </table>
-    <a href="privado.php">Registrar nuevo usuario</a>
+
+    <form action="privado.php">
+        <input type="submit" value="Registrar nuevo usuario" />
+    </form>
 </body>
 </html>
