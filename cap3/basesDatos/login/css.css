@@ -1,0 +1,88 @@
+
+body{
+    background-image: url("fondo.jpg");
+    background-size: cover;
+}
+.contenedor{
+    width: 500px;
+    margin: 0 auto;
+    background-color: #1c2b4a;
+    margin-top: 10%;
+}
+h2{
+    background-color: #17233b;
+    text-align: center;
+    color: white;
+    padding: 15px;
+}
+form{
+    margin-left: 7.5%;
+    margin-right: 7.5%;
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+}
+.inpt{
+    width: 98%; 
+    margin-bottom: 10px;
+    background-color: #12192c;
+    color: white;
+    height: 50px;
+    font-size: 20px;
+}
+.boton, .cerrar, .registrar{
+    width: 100%;
+    background-color: #00cc66;
+    border-radius: 2px;
+    border-style: none;
+    padding: 10px;
+    margin-bottom: 10px; 
+    
+}
+.boton>a{
+    text-decoration:none;
+    color: white;
+    font-size: 25px;
+}
+.mensaje{
+    text-align: center;
+    background-color: red;
+    font-weight: bold;
+}
+
+table{
+    margin: 0 auto;
+    margin-top: 10%;
+    width: 50%;
+    text-align: center;
+    font-size: 25px;
+}
+td {
+    border: 1px solid;
+    background-color: white;
+    height: 50px;
+    max-width:350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 5px;
+    background-color: beige;
+}
+a {
+    text-decoration:none;
+}
+
+.registrar, .cerrar{
+    width: 30%;
+    margin: 0%;
+    font-size: 40px;
+}
+
+.cerrar{
+   
+    text-align: center;
+}
+.registrar{
+    text-align: center;
+  
+}

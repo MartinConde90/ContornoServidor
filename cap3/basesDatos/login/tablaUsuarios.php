@@ -1,12 +1,23 @@
 <?php
-$dsn = "mysql:dbname=docker_demo;host=docker-mysql";
-$usuario ="root";
-$password = "root123";
-$bd = new PDO($dsn, $usuario, $password);
+if(!isset($_SESSION)) { 
+    session_start(); 
+} 
 
-$stm = $bd->prepare("SELECT * from usuario");
-$stm->execute();
-$usuarios = $stm->fetchAll();
+if (!isset($_SESSION["correo"])) {
+    header("location:login.php");
+    exit();
+}else{
+    $dsn = "mysql:dbname=docker_demo;host=docker-mysql";
+    $usuario ="root";
+    $password = "root123";
+    $bd = new PDO($dsn, $usuario, $password);
+    
+    $stm = $bd->prepare("SELECT * from usuario");
+    $stm->execute();
+    $usuarios = $stm->fetchAll();
+}
+
+
 ?>
 
 
@@ -17,16 +28,19 @@ $usuarios = $stm->fetchAll();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista Usuarios</title>
+    <link rel="stylesheet" type="text/css" href="css.css" media="screen" />
     <style>
-        td {
-            border: 1px solid;
-        }
-        a {
-            text-decoration:none;
-        }
+        
+    
     </style>
 </head>
 <body>
+    
+    <div>
+    <a class="registrar" href="privado.php">Registrar nuevo usuario</a></td>
+    <a class="cerrar" href="salir.php">Cerrar Sesion</a></td>
+    </div>
+    
     <table>
         
         <?php
@@ -45,8 +59,6 @@ $usuarios = $stm->fetchAll();
         
     </table>
 
-    <form action="privado.php">
-        <input type="submit" value="Registrar nuevo usuario" />
-    </form>
+    
 </body>
 </html>

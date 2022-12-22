@@ -18,12 +18,10 @@ class Usuario {
 
     public function comprobarValidarUsuario($contraseña,$correo) {
 
-        if (password_verify($this->password,$contraseña) && $this->correo == $correo) {
-            return "Acceso verificado";
-        } else {
-            return "acceso denegado";
-        }
+        return password_verify($contraseña,$this->password) && $this->correo == $correo;
+        
     }
+    
 
     public function getIdUsuario()
     {
