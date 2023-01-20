@@ -14,7 +14,10 @@ h2{
     text-align: center;
     color: white;
     padding: 15px;
+<<<<<<< HEAD
     margin-top: 0px;
+=======
+>>>>>>> 0e3ebe9adf01e11c96ceb93db185253e2f1841b4
 }
 form{
     margin-left: 7.5%;
@@ -86,9 +89,12 @@ a {
 .registrar{
     text-align: center;
   
+<<<<<<< HEAD
 }
 .alerta{
     color: red;
     text-align: center;
     margin-bottom: 0px;
+=======
+>>>>>>> 0e3ebe9adf01e11c96ceb93db185253e2f1841b4
 }

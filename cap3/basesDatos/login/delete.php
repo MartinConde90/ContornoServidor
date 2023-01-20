@@ -2,7 +2,7 @@
 session_start();
 if(isset($_SESSION["correo"])){
     $id = $_GET['id'];
-    $dsn = "mysql:dbname=docker_demo;host=docker-mysql";
+    $dsn = "mysql:host=localhost;dbname=usuarios";
         $usuario ="root";
         $password = "root123";
         $bd = new PDO($dsn, $usuario, $password);
