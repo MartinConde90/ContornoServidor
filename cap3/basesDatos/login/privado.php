@@ -36,9 +36,9 @@ if (!isset($_SESSION["correo"])) {
         $apellidos = $_POST["apellidos"];
         $objeto = new usuario(null,$nombre,$apellidos,$correo,$passwd);
 
-        $dsn = "mysql:dbname=docker_demo;host=docker-mysql";
+        $dsn = "mysql:host=localhost;dbname=usuarios";
         $usuario ="root";
-        $password = "root123";
+        $password = "";
         $bd = new PDO($dsn, $usuario, $password);
 
         $stm = $bd->prepare("INSERT INTO usuario (nombre, apellidos, email, pass) VALUES (:nombre,:apellidos,:correo,:password)"); //los dos puntos hacen referencia al nombre de la siguiente linea

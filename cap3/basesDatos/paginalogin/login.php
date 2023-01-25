@@ -15,7 +15,6 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["nombre"]) && $_POST["nom
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

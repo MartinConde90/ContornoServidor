@@ -10,9 +10,9 @@ if (!isset($_SESSION["correo"])) {
 }else{
     if(isset($_SESSION["correo"])){
         $id = $_GET['id'];
-        $dsn = "mysql:dbname=docker_demo;host=docker-mysql";
+        $dsn = "mysql:host=localhost;dbname=usuarios";
         $usuario ="root";
-        $password = "root123";
+        $password = "";
         $bd = new PDO($dsn, $usuario, $password);
         $stm = $bd->prepare("SELECT * from usuario where idusuario = :id limit 1"); //los dos puntos hacen referencia al nombre de la siguiente linea
         $stm->execute([":id"=>$id]);

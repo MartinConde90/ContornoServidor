@@ -7,9 +7,9 @@ if (!isset($_SESSION["correo"])) {
     header("location:login.php");
     exit();
 }else{
-    $dsn = "mysql:dbname=docker_demo;host=docker-mysql";
+    $dsn = "mysql:host=localhost;dbname=usuarios";
     $usuario ="root";
-    $password = "root123";
+    $password = "";
     $bd = new PDO($dsn, $usuario, $password);
     
     $stm = $bd->prepare("SELECT * from usuario");
@@ -37,8 +37,8 @@ if (!isset($_SESSION["correo"])) {
 <body>
     
     <div>
-    <a class="registrar" href="privado.php">Registrar nuevo usuario</a></td>
-    <a class="cerrar" href="salir.php">Cerrar Sesion</a></td>
+    <a class="registrar" href="privado.php">Registrar nuevo usuario</a>
+    <a class="cerrar" href="salir.php">Cerrar Sesion</a>
     </div>
     
     <table>

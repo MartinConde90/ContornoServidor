@@ -4,7 +4,7 @@ if(isset($_SESSION["correo"])){
     $id = $_GET['id'];
     $dsn = "mysql:host=localhost;dbname=usuarios";
         $usuario ="root";
-        $password = "root123";
+        $password = "";
         $bd = new PDO($dsn, $usuario, $password);
         //$sql = "select * from usuario where correo='$correo' and password='$passwd' limit 1";
         //echo $sql;
