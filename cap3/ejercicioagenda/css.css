@@ -4,7 +4,7 @@ body{
     background-size: cover;
 }
 .contenedor{
-    width: 500px;
+    width: 520px;
     margin: 0 auto;
     background-color: #1c2b4a;
     margin-top: 10%;
@@ -15,21 +15,7 @@ h2{
     color: white;
     padding: 15px;
 }
-form{
-    margin-left: 7.5%;
-    margin-right: 7.5%;
-    width: 85%;
-    display: flex;
-    flex-direction: column;
-}
-.inpt{
-    width: 98%; 
-    margin-bottom: 10px;
-    background-color: #12192c;
-    color: white;
-    height: 50px;
-    font-size: 20px;
-}
+
 .boton, .cerrar, .registrar{
     width: 100%;
     background-color: #00cc66;
