@@ -1,29 +1,39 @@
 <?php
 require_once("Evento.php");
 $mensaje = "";
-session_start();
+if(!isset($_SESSION)) 
+{ 
+    session_start(); 
+    
+} 
+
+$eventos = [];
+if(isset($_SESSION['eventos'])){
+    $eventos =  unserialize($_SESSION['eventos']);
+}
+
 if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["nombre"])&& isset($_POST["fecha_ini"])&& isset($_POST["fecha_fin"]) ) {
+    $id = $_POST["id"];
     $nombre = $_POST["nombre"];
     $fecha_ini = $_POST["fecha_ini"];
     $fecha_fin = $_POST["fecha_fin"];
-
-    //echo $fecha_ini;
     
-    $fecha = new DateTime($fecha_ini);
-    $fechafin = new DateTime($fecha_fin);
-    //echo "<br>".$fecha->format("d-m-Y T H:i ");
-    //echo "<br>".$fechafin->format("d-m-Y T H:i ");
-    
+        $eventos[] = new Evento($id,$nombre,new DateTime($fecha_ini),new DateTime($fecha_fin),$_SESSION["usuario"]["idUsuario"]);
 
-    $eventonew = new Evento(14,$nombre,$fecha,$fecha,$_SESSION["usuario"]["idUsuario"]);
+            /*
             $_SESSION["id_evento"] = $eventonew->getId_evento();
             $_SESSION["nombreevento"] = $eventonew->getNombre();
             $_SESSION["fechainicio"] = $eventonew->getFecha_inicio();
             $_SESSION["fechafin"] = $eventonew->getFecha_fin();
+            $_SESSION["id_usuario"] = $eventonew->getId_usuario();
+            $array = array($_SESSION["id_evento"],$_SESSION["nombreevento"],$_SESSION["fechainicio"],$_SESSION["fechafin"],$_SESSION["id_usuario"]);
+            */
+            $_SESSION['eventos'] =  serialize($eventos);
 
 
             
     header("location:agenda.php");
+    //var_dump($_SESSION['eventos']);
     
 }
 ?>
@@ -43,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["nombre"])&& isset($_POS
     <div class="contenedor">
         <h2>Creación eventos</h2>
         <form action="" method="post">
+                <input class="inpt" type="text" name="id" id="id" required placeholder="ID numérico del evento">
                 <input class="inpt" type="text" name="nombre" id="nombre" required placeholder="Nombre del evento">
                 <input class="inpt" type="datetime-local" name="fecha_ini" id="fecha_ini" required placeholder="Fecha Inicio">
                 <input class="inpt" type="datetime-local" name="fecha_fin" id="fecha_fin" required placeholder="Fecha Fin">

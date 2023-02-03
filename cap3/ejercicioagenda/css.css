@@ -9,6 +9,16 @@ body{
     background-color: #1c2b4a;
     margin-top: 10%;
 }
+.modif{
+    width: 500px;
+    margin: 0 auto;
+    background-color: #1c2b4a;
+    margin-top: 10%;
+}
+.modif>form>label{
+    color: white;
+    width: 50px;
+}
 h2{
     background-color: #17233b;
     text-align: center;
@@ -71,12 +81,4 @@ a {
 .registrar{
     text-align: center;
   
-<<<<<<< HEAD
-}
-.alerta{
-    color: red;
-    text-align: center;
-    margin-bottom: 0px;
-=======
->>>>>>> 0e3ebe9adf01e11c96ceb93db185253e2f1841b4
 }

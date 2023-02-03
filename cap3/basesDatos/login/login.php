@@ -1,6 +1,9 @@
 <?php
 require_once("usuario.php");
-session_start();
+if(!isset($_SESSION)) 
+{ 
+    session_start(); 
+} 
 $mensaje ="";
 if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["correo"])&& isset($_POST["password"]) ) {
     $correo = $_POST["correo"];

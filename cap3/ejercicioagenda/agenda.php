@@ -1,5 +1,13 @@
 <?php
 require_once("eventos.php");
+if(!isset($_SESSION)) 
+{ 
+    session_start(); 
+    
+} 
+$eventos = unserialize($_SESSION['eventos']);
+
+var_dump($eventos);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,13 +27,20 @@ require_once("eventos.php");
             <td>fecha_fin</td>
             <td>id_usuario</td>
         </tr>
+        <?php
+        
+            foreach ($eventos as $id => $evento) {
+        //for($i=0; $i< count($eventos); $i++){
+                 ?>
         <tr>
-            <td><?= $_SESSION["id_evento"] ?></td>
-            <td><?= $_SESSION["nombreevento"] ?></td>
-            <td><?= $_SESSION["fechainicio"]->format("d-m-Y T H:i ") ?></td>
-            <td><?= $_SESSION["fechafin"]->format("d-m-Y T H:i ") ?></td>
-            <td><?= $_SESSION["usuario"]["idUsuario"] ?></td>
+            <td><?= $evento->getId_evento() ?></td>
+            <td><?= $evento->getNombre() ?></td>
+            <td><?= $evento->getFecha_inicio()->format("d-m-Y T H:i ") ?></td>
+            <td><?= $evento->getFecha_fin()->format("d-m-Y T H:i ") ?></td>
+            <td><?= $evento->getId_usuario() ?></td>
+            <td><a  href="modifEvento.php?id=<?= $id?>">Modificar evento</a></td>
         </tr>
+        <?php } ?>
     </table>
 </body>
 </html>
