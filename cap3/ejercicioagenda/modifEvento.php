@@ -5,26 +5,34 @@ if(!isset($_SESSION))
     session_start(); 
 } 
 
+$eventos = unserialize($_SESSION['eventos']);
+
+$id = $_GET['id'];
+$nombre="";
+$fecha_ini="";
+$fecha_fin="";
+
+$eventoAmodif;
+
+foreach ($eventos as $key => $evento){
+    if($evento->getId_evento() == $id){
+        $eventoAmodif = $evento;
+    }
+}
+
 if ($_SERVER["REQUEST_METHOD"]== "POST"){
-    $nombre = $_POST["nombre"];
 
-    if($_POST["fecha_ini"]==""){
-        $fecha =$_SESSION["fechainicio"];
-    }else{
-        $fecha = new DateTime($_POST["fecha_ini"]);
+    if(!$_POST["nombre"]==""){
+        $eventoAmodif->setNombre($_POST["nombre"]);
     }
-    if($_POST["fecha_fin"]==""){
-        $fechafin =$_SESSION["fechafin"];
-    }else{
-        $fechafin = new DateTime($_POST["fecha_fin"]);
+    if(!$_POST["fecha_ini"]==""){
+        $eventoAmodif->setFecha_inicio(new DateTime($_POST["fecha_ini"]));
+    }
+    if(!$_POST["fecha_fin"]==""){
+        $eventoAmodif->setFecha_fin(new DateTime($_POST["fecha_fin"]));
     }
 
-
-    $eventonew = new Evento(14,$nombre,$fecha,$fechafin,$_SESSION["usuario"]["idUsuario"]);
-
-            $_SESSION["nombreevento"] = $eventonew->getNombre();
-            $_SESSION["fechainicio"] = $eventonew->getFecha_inicio();
-            $_SESSION["fechafin"] = $eventonew->getFecha_fin();
+    $_SESSION['eventos'] =  serialize($eventos);
 
             header("location:agenda.php");
 }
@@ -47,13 +55,13 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
 
             <br>
             <label>Nombre Evento</label>
-            <input class="inpt" type="text" name="nombre" id="nombre"  value="<?=$_SESSION["nombreevento"]?>">
+            <input class="inpt" type="text" name="nombre" id="nombre"  value="<?=$eventoAmodif->getNombre();?>">
             <br>
             <label>Fecha Inicio</label>
-            <input class="inpt" type="datetime-local" name="fecha_ini" id="fecha_ini" value="<?=$_SESSION["fechainicio"]->format("d-m-Y T H:i ")?>">
+            <input class="inpt" type="datetime-local" name="fecha_ini" id="fecha_ini" value="<?=$eventoAmodif->getFecha_inicio()->format("d-m-Y T H:i ")?>">
             <br>
             <label>Fecha Fin</label>
-            <input class="inpt" type="datetime-local" name="fecha_fin" id="fecha_fin" value="<?=$_SESSION["fechafin"]->format("d-m-Y T H:i ")?>">
+            <input class="inpt" type="datetime-local" name="fecha_fin" id="fecha_fin" value="<?=$eventoAmodif->getFecha_fin()->format("d-m-Y T H:i ")?>">
             <br>
             <input class="boton" type="submit" value="Modificar">
 

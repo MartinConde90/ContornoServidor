@@ -7,7 +7,7 @@ if(!isset($_SESSION))
 } 
 $eventos = unserialize($_SESSION['eventos']);
 
-var_dump($eventos);
+//var_dump($eventos);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +38,7 @@ var_dump($eventos);
             <td><?= $evento->getFecha_inicio()->format("d-m-Y T H:i ") ?></td>
             <td><?= $evento->getFecha_fin()->format("d-m-Y T H:i ") ?></td>
             <td><?= $evento->getId_usuario() ?></td>
-            <td><a  href="modifEvento.php?id=<?= $id?>">Modificar evento</a></td>
+            <td><a  href="modifEvento.php?id=<?= $evento->getId_evento() ?>">Modificar evento</a></td>
         </tr>
         <?php } ?>
     </table>
