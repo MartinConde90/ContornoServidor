@@ -13,6 +13,10 @@ class Evento{
         if($this->id_evento == null){
             throw new Exception("El evento necesita un usuario asignado");
         }
+        if($this->fecha_fin==null){
+            $this->fecha_fin = clone $this->fecha_inicio;
+            $this->fecha_fin->modify("+ 1 hour");
+        }
     }
 
         public function getId_evento()

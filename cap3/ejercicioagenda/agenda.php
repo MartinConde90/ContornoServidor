@@ -1,11 +1,10 @@
 <?php
-require_once("eventos.php");
+require_once("Evento.php");
 if(!isset($_SESSION)) 
 { 
-    session_start(); 
-    
+    session_start();  
 } 
-$eventos = unserialize($_SESSION['eventos']);
+
 
 //var_dump($eventos);
 ?>
@@ -19,28 +18,37 @@ $eventos = unserialize($_SESSION['eventos']);
     <title>Document</title>
 </head>
 <body>
+    
+    <select class="menus" onchange="location = this.value;">
+        <option>Eventos</option>
+        <option value="eventos.php">Crear Eventos</option>
+    </select>
+    <select class="menus" onchange="location = this.value;">
+        <option>Usuarios</option>
+        <option value="#">Añadir Usuario</option>
+        <option value="#">Modificar Usuario</option>
+        <option value="#">Eliminar Usuario</option>
+    </select>
+    
     <table>
         <tr>
-            <td>id_evento</td>
             <td>nombre</td>
             <td>fecha_inicio</td>
             <td>fecha_fin</td>
-            <td>id_usuario</td>
         </tr>
         <?php
-        
-            foreach ($eventos as $id => $evento) {
+            if(isset($_SESSION['eventos'])){
+                $eventos = unserialize($_SESSION['eventos']);
+                foreach ($eventos as $id => $evento) {
         //for($i=0; $i< count($eventos); $i++){
                  ?>
         <tr>
-            <td><?= $evento->getId_evento() ?></td>
             <td><?= $evento->getNombre() ?></td>
-            <td><?= $evento->getFecha_inicio()->format("d-m-Y T H:i ") ?></td>
-            <td><?= $evento->getFecha_fin()->format("d-m-Y T H:i ") ?></td>
-            <td><?= $evento->getId_usuario() ?></td>
+            <td><?= $evento->getFecha_inicio()->format("d-m-Y H:i ") ?></td>
+            <td><?= $evento->getFecha_fin()->format("d-m-Y H:i ") ?></td>
             <td><a  href="modifEvento.php?id=<?= $evento->getId_evento() ?>">Modificar evento</a></td>
         </tr>
-        <?php } ?>
+        <?php }} ?>
     </table>
 </body>
 </html>

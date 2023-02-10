@@ -4,7 +4,6 @@ $mensaje = "";
 if(!isset($_SESSION)) 
 { 
     session_start(); 
-    
 } 
 
 $eventos = [];
@@ -16,9 +15,10 @@ if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["nombre"])&& isset($_POS
     $id = $_POST["id"];
     $nombre = $_POST["nombre"];
     $fecha_ini = $_POST["fecha_ini"];
-    $fecha_fin = $_POST["fecha_fin"];
+
+    $fecha_fin = $_POST["fecha_fin"]!=""?new DateTime($_POST["fecha_fin"]):null;
     
-        $eventos[] = new Evento($id,$nombre,new DateTime($fecha_ini),new DateTime($fecha_fin),$_SESSION["usuario"]["idUsuario"]);
+        $eventos[] = new Evento($id,$nombre,new DateTime($fecha_ini),$fecha_fin,$_SESSION["usuario"]["idUsuario"]);
 
             /*
             $_SESSION["id_evento"] = $eventonew->getId_evento();
@@ -45,9 +45,20 @@ if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["nombre"])&& isset($_POS
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css.css" media="screen" />
     <title>Document</title>
 </head>
 <body>
+    <select class="menus" onchange="location = this.value;">
+        <option>Eventos</option>
+        <option value="agenda.php">Listado Eventos</option>
+    </select>
+    <select class="menus" onchange="location = this.value;">
+        <option>Usuarios</option>
+        <option value="#">Añadir Usuario</option>
+        <option value="#">Modificar Usuario</option>
+        <option value="#">Eliminar Usuario</option>
+    </select>
     <div class="mensaje"><?=$mensaje?></div>
 
     <div class="contenedor">
@@ -56,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["nombre"])&& isset($_POS
                 <input class="inpt" type="text" name="id" id="id" required placeholder="ID numérico del evento">
                 <input class="inpt" type="text" name="nombre" id="nombre" required placeholder="Nombre del evento">
                 <input class="inpt" type="datetime-local" name="fecha_ini" id="fecha_ini" required placeholder="Fecha Inicio">
-                <input class="inpt" type="datetime-local" name="fecha_fin" id="fecha_fin" required placeholder="Fecha Fin">
+                <input class="inpt" type="datetime-local" name="fecha_fin" id="fecha_fin" placeholder="Fecha Fin">
                 <input class="boton" type="submit" value="Crear">    
         </form>
     </div>
