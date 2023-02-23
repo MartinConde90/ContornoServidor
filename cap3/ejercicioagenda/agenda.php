@@ -1,7 +1,7 @@
 <?php
 require_once("Evento.php");
-if(!isset($_SESSION)) 
-{ 
+require_once("SelectorPersistente.php");
+if(session_status() !== PHP_SESSION_ACTIVE){ 
     session_start();  
 } 
 
@@ -25,7 +25,7 @@ if(!isset($_SESSION))
     </select>
     <select class="menus" onchange="location = this.value;">
         <option>Usuarios</option>
-        <option value="#">Añadir Usuario</option>
+        <option value="registro.php">Añadir Usuario</option>
         <option value="#">Modificar Usuario</option>
         <option value="#">Eliminar Usuario</option>
     </select>
@@ -37,8 +37,8 @@ if(!isset($_SESSION))
             <td>fecha_fin</td>
         </tr>
         <?php
-            if(isset($_SESSION['eventos'])){
-                $eventos = unserialize($_SESSION['eventos']);
+                 $eventos = SelectorPersistente::getEventoPersistente()->listar();
+                 
                 foreach ($eventos as $id => $evento) {
         //for($i=0; $i< count($eventos); $i++){
                  ?>
@@ -47,8 +47,9 @@ if(!isset($_SESSION))
             <td><?= $evento->getFecha_inicio()->format("d-m-Y H:i ") ?></td>
             <td><?= $evento->getFecha_fin()->format("d-m-Y H:i ") ?></td>
             <td><a  href="modifEvento.php?id=<?= $evento->getId_evento() ?>">Modificar evento</a></td>
+            <td><a  href="eliminar.php?id=<?= $evento->getId_evento() ?>" onclick="javascript:return confirm('Estás seguro de eliminar el evento?')">Eliminar evento</a></td>
         </tr>
-        <?php }} ?>
+        <?php }?>
     </table>
 </body>
 </html>

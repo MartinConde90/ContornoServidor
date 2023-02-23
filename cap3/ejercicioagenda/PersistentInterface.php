@@ -10,4 +10,6 @@ interface PersistentInterface{
     function modificar($datos);
 
     function eliminar($id);
+
+    //function getObbjeto($id);
 }

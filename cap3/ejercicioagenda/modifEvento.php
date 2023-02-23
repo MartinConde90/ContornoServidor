@@ -1,11 +1,11 @@
 <?php
 require_once("Evento.php");
-if(!isset($_SESSION)) 
-{ 
+require_once("SelectorPersistente.php");
+if(session_status() !== PHP_SESSION_ACTIVE){
     session_start(); 
 } 
 
-$eventos = unserialize($_SESSION['eventos']);
+
 
 $id = $_GET['id'];
 $nombre="";
@@ -14,6 +14,7 @@ $fecha_fin="";
 
 $eventoAmodif;
 
+$eventos = SelectorPersistente::getEventoPersistente()->listar();
 foreach ($eventos as $key => $evento){
     if($evento->getId_evento() == $id){
         $eventoAmodif = $evento;
@@ -23,16 +24,21 @@ foreach ($eventos as $key => $evento){
 if ($_SERVER["REQUEST_METHOD"]== "POST"){
 
     if(!$_POST["nombre"]==""){
-        $eventoAmodif->setNombre($_POST["nombre"]);
+        $nombre = ($_POST["nombre"]);
     }
     if(!$_POST["fecha_ini"]==""){
-        $eventoAmodif->setFecha_inicio(new DateTime($_POST["fecha_ini"]));
+        $fecha_ini = new DateTime($_POST["fecha_ini"]);
+    }else{
+        $fecha_ini = $eventoAmodif->getFecha_inicio();
     }
     if(!$_POST["fecha_fin"]==""){
-        $eventoAmodif->setFecha_fin(new DateTime($_POST["fecha_fin"]));
+        $fecha_fin = new DateTime($_POST["fecha_fin"]);
+    }else{
+        $fecha_fin = $eventoAmodif->getFecha_fin();
     }
 
-    $_SESSION['eventos'] =  serialize($eventos);
+    $evento = new Evento($id,$nombre,$fecha_ini,$fecha_fin,$_SESSION["usuario"]["idUsuario"]);
+    SelectorPersistente::getEventoPersistente()->modificar($evento);
 
             header("location:agenda.php");
 }

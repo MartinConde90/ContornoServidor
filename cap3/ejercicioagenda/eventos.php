@@ -1,5 +1,6 @@
 <?php
 require_once("Evento.php");
+require_once("SelectorPersistente.php");
 $mensaje = "";
 if(!isset($_SESSION)) 
 { 
@@ -15,10 +16,9 @@ if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["nombre"])&& isset($_POS
     $id = $_POST["id"];
     $nombre = $_POST["nombre"];
     $fecha_ini = $_POST["fecha_ini"];
-
     $fecha_fin = $_POST["fecha_fin"]!=""?new DateTime($_POST["fecha_fin"]):null;
     
-        $eventos[] = new Evento($id,$nombre,new DateTime($fecha_ini),$fecha_fin,$_SESSION["usuario"]["idUsuario"]);
+        
 
             /*
             $_SESSION["id_evento"] = $eventonew->getId_evento();
@@ -28,7 +28,10 @@ if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["nombre"])&& isset($_POS
             $_SESSION["id_usuario"] = $eventonew->getId_usuario();
             $array = array($_SESSION["id_evento"],$_SESSION["nombreevento"],$_SESSION["fechainicio"],$_SESSION["fechafin"],$_SESSION["id_usuario"]);
             */
-            $_SESSION['eventos'] =  serialize($eventos);
+            $evento = new Evento($id,$nombre,new DateTime($fecha_ini),$fecha_fin,$_SESSION["usuario"]["idUsuario"]);
+            SelectorPersistente::getEventoPersistente()->guardar($evento);
+
+            
 
 
             
@@ -54,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["nombre"])&& isset($_POS
         <option value="agenda.php">Listado Eventos</option>
     </select>
     <select class="menus" onchange="location = this.value;">
-        <option>Usuarios</option>
+        <option value="#">Usuarios</option>
         <option value="#">Añadir Usuario</option>
         <option value="#">Modificar Usuario</option>
         <option value="#">Eliminar Usuario</option>
