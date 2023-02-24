@@ -1,10 +1,9 @@
 <?php
-require_once("Evento.php");
+require_once("Usuario.php");
 require_once("SelectorPersistente.php");
 if(session_status() !== PHP_SESSION_ACTIVE){ 
     session_start();  
 } 
-
 
 //var_dump($eventos);
 ?>
@@ -21,32 +20,33 @@ if(session_status() !== PHP_SESSION_ACTIVE){
     
     <select class="menus" onchange="location = this.value;">
         <option>Eventos</option>
-        <option value="eventos.php">Crear Eventos</option>
+        <option value="agenda.php">Listado Eventos</option>
+        <option value="eventos.php">Crear evento</option>
     </select>
     <select class="menus" onchange="location = this.value;">
-        <option value="#">Opciones</option>
-        <option value="listarUsuarios.php">Listar Usuarios</option>
+        <option value="#">Usuarios</option>
         <option value="nuevoUsuario.php">Añadir Usuario</option>
+
     </select>
     
     <table>
         <tr>
+            <td>ID</td>
             <td>nombre</td>
-            <td>fecha_inicio</td>
-            <td>fecha_fin</td>
+            <td>Email</td>
         </tr>
         <?php
-                 $eventos = SelectorPersistente::getEventoPersistente()->listar();
-                 
-                foreach ($eventos as $id => $evento) {
+                 $usuarios = SelectorPersistente::getUsuarioPersistente()->listar();
+                 //var_dump($usuarios);
+                foreach ($usuarios as $id => $usuario) {
         //for($i=0; $i< count($eventos); $i++){
                  ?>
         <tr>
-            <td><?= $evento->getNombre() ?></td>
-            <td><?= $evento->getFecha_inicio()->format("d-m-Y H:i ") ?></td>
-            <td><?= $evento->getFecha_fin()->format("d-m-Y H:i ") ?></td>
-            <td><a  href="modifEvento.php?id=<?= $evento->getId_evento() ?>">Modificar evento</a></td>
-            <td><a  href="eliminarEvento.php?id=<?= $evento->getId_evento() ?>" onclick="javascript:return confirm('Estás seguro de eliminar el evento?')">Eliminar evento</a></td>
+            <td><?= $usuario->getId_usuario() ?></td>
+            <td><?= $usuario->getNombre() ?></td>
+            <td><?= $usuario->getCorreo() ?></td>
+            <td><a  href="modifUsuarios.php?id=<?= $usuario->getId_usuario() ?>">Modificar usuario</a></td>
+            <td><a  href="eliminarUsuarios.php?id=<?= $usuario->getId_usuario() ?>" onclick="javascript:return confirm('Estás seguro de eliminar este usuario?')">Eliminar usuario</a></td>
         </tr>
         <?php }?>
     </table>

@@ -8,8 +8,8 @@ class UsuarioSesiones implements PersistentInterface{
 
     function guardar($datos){
         $usuarios =[];
-        if(isset($_SESSION['eventos'])){
-            $usuarios = unserialize($_SESSION['eventos']);
+        if(isset($_SESSION['usuarios'])){
+            $usuarios = unserialize($_SESSION['usuarios']);
         }
 
         $usuarios[$datos->getId_usuario()] = $datos;

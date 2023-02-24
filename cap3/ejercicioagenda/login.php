@@ -22,25 +22,26 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["correo"])&& isset($_POST
     
 }
 */
+$usuarios = SelectorPersistente::getUsuarioPersistente()->listar();
+//var_dump($usuarios);
+
 if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["correo"])&& isset($_POST["password"]) ) {
     $correo = $_POST["correo"];
     $passwd = $_POST["password"];
+    $_SESSION["sistemaGuardado"] = $_POST['sistemaguardar'];
 
-    $usuarionew = new Usuario(1,"martin","martinconde@gmail.com",1234,1,false);
+    
+    
+    foreach ($usuarios as $id => $usuario) {
 
-    if($usuarionew->getCorreo() == $correo && $usuarionew->getPassword() == $passwd){
-        $mensaje =  "usuario correcto";
+        if($usuario->getCorreo() == $correo && $usuario->getPassword() == $passwd){
             $_SESSION["correo"] = $correo;
-            $_SESSION["usuario"]["idUsuario"] = $usuarionew->getId_usuario();
-            $_SESSION["usuario"]["nombre"] = $usuarionew->getNombre();
-
-            $_SESSION["sistemaGuardado"] = $_POST['sistemaguardar'];
-        
             header("location:index.php");
             exit();
-    } else {
-        $mensaje = "Usuario y/o contraseña incorrectos";
-    }
+        }else{
+            $mensaje = "Usuario no encontrado";
+        }
+    }  
 }
 ?>
 

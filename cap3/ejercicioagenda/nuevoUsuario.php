@@ -23,7 +23,7 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["correo"])&& isset($_POST
     $usuario = new Usuario($id,$nombre,$correo,$password);
     SelectorPersistente::getUsuarioPersistente()->guardar($usuario);
     
-    header("location:index.php");
+    header("location:listarUsuarios.php");
     exit();
 }
 
@@ -39,8 +39,17 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["correo"])&& isset($_POST
     <title>Document</title>
 </head>
 <body>
+    <select class="menus" onchange="location = this.value;">
+        <option>Eventos</option>
+        <option value="agenda.php">Listado Eventos</option>
+        <option value="eventos.php">Crear evento</option>
+    </select>
+    <select class="menus" onchange="location = this.value;">
+        <option value="#">Usuarios</option>
+        <option value="listarUsuarios.php">Listar usuarios</option>
+    </select>
     <div class="mensaje"><?=$mensaje?></div>
-        <h2>Registro de usuario</h2>
+        <h2>Añadir usuario</h2>
         <form action="" method="post">
         <input class="inpt" type="text" name="id" id="id" required placeholder="Id de usuario">
         <input class="inpt" type="text" name="nombre" id="nombre" required placeholder="Nombre de usuario">

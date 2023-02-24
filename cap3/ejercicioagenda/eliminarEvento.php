@@ -7,7 +7,6 @@ if(session_status() !== PHP_SESSION_ACTIVE){
 
 
 $id = $_GET['id'];
-$eventoAmodif;
 
 $eventos = SelectorPersistente::getEventoPersistente()->listar();
 foreach ($eventos as $key => $evento){
