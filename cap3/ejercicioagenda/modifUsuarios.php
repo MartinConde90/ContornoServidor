@@ -28,8 +28,13 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
     }else{
         $correo = $usuarioAmodif->getCorreo();
     }
+    if(!$_POST["rol"]==""){
+        $rol = $_POST["rol"];
+    }else{
+        $rol = $usuarioAmodif->getRol();
+    }
 
-    $usuario = new Usuario($id,$nombre,$correo,$usuarioAmodif->getPassword());
+    $usuario = new Usuario($id,$nombre,$correo,$usuarioAmodif->getPassword(),$rol);
     SelectorPersistente::getUsuarioPersistente()->modificar($usuario);
 
             header("location:listarUsuarios.php");
@@ -57,6 +62,8 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
             <br>
             <label>Correo</label>
             <input class="inpt" type="email" name="correo" id="correo" value="<?=$usuarioAmodif->getCorreo()?>">
+            <br>
+            <input class="inpt" type="number" min="0" max="1" name="rol" id="rol" value="<?=$usuarioAmodif->getRol()?>">
             <br>
             <input class="boton" type="submit" value="Modificar">
 

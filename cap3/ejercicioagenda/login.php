@@ -36,6 +36,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["correo"])&& isset($_POS
 
         if($usuario->getCorreo() == $correo && $usuario->getPassword() == $passwd){
             $_SESSION["correo"] = $correo;
+            $_SESSION["id"] = $usuario->getId_usuario();
             header("location:index.php");
             exit();
         }else{
