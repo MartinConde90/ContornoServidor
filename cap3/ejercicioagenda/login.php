@@ -5,6 +5,8 @@ $mensaje = "";
 if(session_status() !== PHP_SESSION_ACTIVE){
     session_start();
 }
+$usuario = new Usuario(001,"martin","martinconde@gmail.com","1234",1);
+            SelectorPersistente::getUsuarioPersistente()->guardar($usuario);
 /*
 $usuarios = [];
 if(isset($_SESSION['usuarios'])){
@@ -17,33 +19,35 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["correo"])&& isset($_POST
     $correo = $_POST["correo"];
     $password = $_POST["password"];
 
-    $usuario = new Usuario($id,$nombre,$correo,$password);
+    $usuario = new Usuario(001,"martin","martinconde@gmail.com","1234",1);
             SelectorPersistente::getUsuarioPersistente()->guardar($usuario);
     
 }
 */
-$usuarios = SelectorPersistente::getUsuarioPersistente()->listar();
+
+    $usuarios = SelectorPersistente::getUsuarioPersistente()->listar();
 //var_dump($usuarios);
 
-if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["correo"])&& isset($_POST["password"]) ) {
-    $correo = $_POST["correo"];
-    $passwd = $_POST["password"];
-    $_SESSION["sistemaGuardado"] = $_POST['sistemaguardar'];
+    if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["correo"])&& isset($_POST["password"]) ) {
+        $correo = $_POST["correo"];
+        $passwd = $_POST["password"];
+        $_SESSION["sistemaGuardado"] = $_POST['sistemaguardar'];
 
-    
-    
-    foreach ($usuarios as $id => $usuario) {
+        
+        
+        foreach ($usuarios as $id => $usuario) {
 
-        if($usuario->getCorreo() == $correo && $usuario->getPassword() == $passwd){
-            $_SESSION["correo"] = $correo;
-            $_SESSION["id"] = $usuario->getId_usuario();
-            header("location:index.php");
-            exit();
-        }else{
-            $mensaje = "Usuario no encontrado";
-        }
-    }  
-}
+            if($usuario->getCorreo() == $correo && $usuario->getPassword() == $passwd){
+                $_SESSION["correo"] = $correo;
+                $_SESSION["id"] = $usuario->getId_usuario();
+                header("location:index.php");
+                exit();
+            }else{
+                $mensaje = "Usuario no encontrado";
+            }
+        }  
+    }
+
 ?>
 
 

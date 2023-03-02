@@ -6,7 +6,7 @@ class SelectorPersistente{
         if(session_status() !== PHP_SESSION_ACTIVE){
             session_start();
         }
-        return $_SESSION["sistemaGuardado"];
+        return isset($_SESSION["sistemaGuardado"])?$_SESSION["sistemaGuardado"]:-1;
     }
 
     static public function getEventoPersistente(){
