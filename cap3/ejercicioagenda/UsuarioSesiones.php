@@ -11,7 +11,7 @@ class UsuarioSesiones implements PersistentInterface{
         if(isset($_SESSION['usuarios'])){
             $usuarios = unserialize($_SESSION['usuarios']);
         }
-
+        $datos->setId_usuario(count($usuarios));
         $usuarios[$datos->getId_usuario()] = $datos;
         $_SESSION['usuarios'] =  serialize($usuarios);
     }

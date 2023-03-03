@@ -3,16 +3,16 @@
 class Evento{
 
     public function __construct(
-        private $id_evento=null,
         private $nombre=null,
         private ?DateTime $fecha_inicio=null,
         private ?DateTime $fecha_fin=null,
-        private $id_usuario=null
+        private $id_usuario=null,
+        private $id_evento=null
     )
     {
-        if($this->id_evento == null){
+        /*if($this->id_evento == null){
             throw new Exception("El evento necesita un usuario asignado");
-        }
+        }*/
         if($this->fecha_fin==null){
             $this->fecha_fin = clone $this->fecha_inicio;
             $this->fecha_fin->modify("+ 1 hour");

@@ -11,14 +11,14 @@ $eventos = [];
 if(isset($_SESSION['eventos'])){
     $eventos =  unserialize($_SESSION['eventos']);
 }
-
 if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["nombre"])&& isset($_POST["fecha_ini"])&& isset($_POST["fecha_fin"]) ) {
-    $id = $_POST["id"];
     $nombre = $_POST["nombre"];
     $fecha_ini = $_POST["fecha_ini"];
     $fecha_fin = $_POST["fecha_fin"]!=""?new DateTime($_POST["fecha_fin"]):null;
+
+    $_SESSION["sistemaGuardado"] = $_POST['sistemaguardar'];
     
-            $evento = new Evento($id,$nombre,new DateTime($fecha_ini),$fecha_fin,$_SESSION["usuario"]["idUsuario"]);
+            $evento = new Evento($nombre,new DateTime($fecha_ini),$fecha_fin,$_SESSION["id"]);
             SelectorPersistente::getEventoPersistente()->guardar($evento);
      
     header("location:agenda.php");
@@ -52,10 +52,14 @@ if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["nombre"])&& isset($_POS
     <div class="contenedor">
         <h2>Creación eventos</h2>
         <form action="" method="post">
-                <input class="inpt" type="text" name="id" id="id" required placeholder="ID numérico del evento">
                 <input class="inpt" type="text" name="nombre" id="nombre" required placeholder="Nombre del evento">
                 <input class="inpt" type="datetime-local" name="fecha_ini" id="fecha_ini" required placeholder="Fecha Inicio">
                 <input class="inpt" type="datetime-local" name="fecha_fin" id="fecha_fin" placeholder="Fecha Fin">
+                <select class="sistemaguardar" name="sistemaguardar" required>
+                    <option value="0">Sesiones</option>
+                    <option value="1">MySQL</option>
+                    <option value="2">MongoDB</option>
+                </select>
                 <input class="boton" type="submit" value="Crear">    
         </form>
     </div>

@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         $rol = $usuarioAmodif->getRol();
     }
 
-    $usuario = new Usuario($id,$nombre,$correo,$usuarioAmodif->getPassword(),$rol);
+    $usuario = new Usuario($nombre,$correo,$usuarioAmodif->getPassword(),$rol,false,$id);
     SelectorPersistente::getUsuarioPersistente()->modificar($usuario);
 
             header("location:listarUsuarios.php");

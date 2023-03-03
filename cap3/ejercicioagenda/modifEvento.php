@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         $fecha_fin = $eventoAmodif->getFecha_fin();
     }
 
-    $evento = new Evento($id,$nombre,$fecha_ini,$fecha_fin,$_SESSION["usuario"]["idUsuario"]);
+    $evento = new Evento($nombre,$fecha_ini,$fecha_fin,$_SESSION["id"],$id);
     SelectorPersistente::getEventoPersistente()->modificar($evento);
 
             header("location:agenda.php");

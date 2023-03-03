@@ -1,6 +1,8 @@
 <?php
 require_once("EventosSesiones.php");
 require_once("UsuarioSesiones.php");
+require_once("EventosMysql.php");
+require_once("UsuarioMysql.php");
 class SelectorPersistente{
     static private  function getTipoEvento() {
         if(session_status() !== PHP_SESSION_ACTIVE){
@@ -17,7 +19,7 @@ class SelectorPersistente{
                 break;
             
             case 1:
-               // $obj =  new EventosMysql();
+                $obj =  new EventosMysql();
                 break;
             
             case 2:
@@ -39,7 +41,7 @@ class SelectorPersistente{
                 break;
             
             case 1:
-               // $obj =  new EventosMysql();
+                $obj =  new UsuarioMysql();
                 break;
             
             case 2:

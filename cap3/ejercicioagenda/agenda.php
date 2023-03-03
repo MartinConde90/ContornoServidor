@@ -36,8 +36,10 @@ if(session_status() !== PHP_SESSION_ACTIVE){
             <td>fecha_fin</td>
         </tr>
         <?php
+        echo($_SESSION["sistemaGuardado"]);
                  $eventos = SelectorPersistente::getEventoPersistente()->listar();
                  
+                 if($eventos!= null){
                 foreach ($eventos as $id => $evento) {
         //for($i=0; $i< count($eventos); $i++){
                  ?>
@@ -48,7 +50,7 @@ if(session_status() !== PHP_SESSION_ACTIVE){
             <td><a  href="modifEvento.php?id=<?= $evento->getId_evento() ?>">Modificar evento</a></td>
             <td><a  href="eliminarEvento.php?id=<?= $evento->getId_evento() ?>" onclick="javascript:return confirm('Estás seguro de eliminar el evento?')">Eliminar evento</a></td>
         </tr>
-        <?php }?>
+        <?php }}?>
     </table>
 </body>
 </html>

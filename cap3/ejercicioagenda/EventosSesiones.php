@@ -14,7 +14,8 @@ class EventosSessiones implements PersistentInterface{
        
         //var_dump($datos);
         //var_dump($eventos);
-        $eventos[$datos->getId_evento()] = $datos;
+        $datos->setId_evento(count($eventos));
+        $eventos[$datos->setId_evento()] = $datos;
         $_SESSION['eventos'] =  serialize($eventos);
     }
 
