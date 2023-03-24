@@ -4,8 +4,9 @@ require_once("SelectorPersistente.php");
 if(session_status() !== PHP_SESSION_ACTIVE){ 
     session_start();  
 } 
-
-
+if(!isset($_SESSION["id"])){
+    header("location:index.php");
+}
 //var_dump($eventos);
 ?>
 <!DOCTYPE html>
@@ -28,16 +29,19 @@ if(session_status() !== PHP_SESSION_ACTIVE){
         <option value="listarUsuarios.php">Listar Usuarios</option>
         <option value="nuevoUsuario.php">Añadir Usuario</option>
     </select>
-    
+    <button class="cerrar" onclick="window.location.href = 'cerrarSesion.php';">Cerrar sesión</button>
+
     <table>
         <tr>
+            <td>id</td>
             <td>nombre</td>
             <td>fecha_inicio</td>
             <td>fecha_fin</td>
         </tr>
         <?php
-        echo($_SESSION["sistemaGuardado"]);
-                 $eventos = SelectorPersistente::getEventoPersistente()->listar();
+        //echo($_SESSION["sistemaGuardado"]);
+                  $eventos = SelectorPersistente::getEventoPersistenteClass()::listar();
+                 //$eventos = SelectorPersistente::getEventoPersistente()->listar();
                  
                  if($eventos!= null){
                 foreach ($eventos as $id => $evento) {

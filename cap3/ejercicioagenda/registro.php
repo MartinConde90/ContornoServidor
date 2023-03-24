@@ -2,6 +2,7 @@
 require_once("Usuario.php");
 require_once("SelectorPersistente.php");
 require_once("BDMySql.php");
+require_once("BDMongo.php");
 $mensaje = "";
 if(session_status() !== PHP_SESSION_ACTIVE)
 {
@@ -19,13 +20,16 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["correo"])&& isset($_POST
     $password = $_POST["password"];
 
     $_SESSION["sistemaGuardado"] = $_POST['sistemaguardar'];
+    $TipoUsuario = SelectorPersistente::getUsuarioPersistenteClass();
+    $usuario = new $TipoUsuario($nombre,$correo,$password,0,true);
+    $usuario->guardar($usuario);
 
-    $usuario = new Usuario($nombre,$correo,$password,true);
-    SelectorPersistente::getUsuarioPersistente()->guardar($usuario);
+    //$usuario = new Usuario($nombre,$correo,$password,true);
+    //SelectorPersistente::getUsuarioPersistente()->guardar($usuario);
     
-    
-    exit();
     header("location:index.php");
+    exit();
+    
 }
 
 ?>

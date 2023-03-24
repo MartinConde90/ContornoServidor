@@ -17,9 +17,11 @@ if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["nombre"])&& isset($_POS
     $fecha_fin = $_POST["fecha_fin"]!=""?new DateTime($_POST["fecha_fin"]):null;
 
     $_SESSION["sistemaGuardado"] = $_POST['sistemaguardar'];
-    
-            $evento = new Evento($nombre,new DateTime($fecha_ini),$fecha_fin,$_SESSION["id"]);
-            SelectorPersistente::getEventoPersistente()->guardar($evento);
+            $TipoEvento = SelectorPersistente::getEventoPersistenteClass();
+            $evento = new $TipoEvento($nombre,new DateTime($fecha_ini),$fecha_fin,$_SESSION["id"]);
+            $evento->guardar($evento);
+            //$evento = new Evento($nombre,new DateTime($fecha_ini),$fecha_fin,$_SESSION["id"]);
+           // SelectorPersistente::getEventoPersistente()->guardar($evento);
      
     header("location:agenda.php");
     //var_dump($_SESSION['eventos']);
@@ -47,6 +49,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["nombre"])&& isset($_POS
         <option value="listarUsuarios.php">Listar Usuarios</option>
         <option value="nuevoUsuario.php">Añadir Usuario</option>
     </select>
+    <button class="cerrar" onclick="window.location.href = 'cerrarSesion.php';">Cerrar sesión</button>
     <div class="mensaje"><?=$mensaje?></div>
 
     <div class="contenedor">

@@ -1,8 +1,13 @@
 <?php
+
+use function PHPSTORM_META\type;
+
 require_once("EventosSesiones.php");
-require_once("UsuarioSesiones.php");
 require_once("EventosMysql.php");
+require_once("EventosMongo.php");
+require_once("UsuarioSesiones.php");
 require_once("UsuarioMysql.php");
+require_once("UsuarioMongo.php");
 class SelectorPersistente{
     static private  function getTipoEvento() {
         if(session_status() !== PHP_SESSION_ACTIVE){
@@ -10,7 +15,7 @@ class SelectorPersistente{
         }
         return isset($_SESSION["sistemaGuardado"])?$_SESSION["sistemaGuardado"]:-1;
     }
-
+/*
     static public function getEventoPersistente(){
         $obj =null;
         switch(self::getTipoEvento()){
@@ -23,7 +28,7 @@ class SelectorPersistente{
                 break;
             
             case 2:
-                //$obj =  new EventosMongo();
+                $obj =  new EventosMongo();
                 break;
 
             default: 
@@ -32,7 +37,31 @@ class SelectorPersistente{
         }
         return $obj;
     }
+*/
 
+
+    static public function getEventoPersistenteClass(){
+        $obj =null;
+        switch(self::getTipoEvento()){
+            case 0: 
+                $obj =  EventosSessiones::class;
+                break;
+            
+            case 1:
+                $obj =  EventosMysql::class;
+                break;
+            
+            case 2:
+                $obj =  EventosMongo::class;
+                break;
+
+            default: 
+            $obj =  EventosSessiones::class;
+            break;
+        }
+        return $obj;
+    }
+/*
     static public function getUsuarioPersistente(){
         $obj =null;
         switch(self::getTipoEvento()){
@@ -45,11 +74,33 @@ class SelectorPersistente{
                 break;
             
             case 2:
-                //$obj =  new EventosMongo();
+                $obj =  new UsuarioMongo();
                 break;
 
             default: 
             $obj =  new UsuarioSesiones();
+            break;
+        }
+        return $obj;
+    }
+*/
+    static public function getUsuarioPersistenteClass(){
+        $obj =null;
+        switch(self::getTipoEvento()){
+            case 0: 
+                $obj =  UsuarioSesiones::class;
+                break;
+            
+            case 1:
+                $obj =  UsuarioMysql::class;
+                break;
+            
+            case 2:
+                $obj =  UsuarioMongo::class;
+                break;
+
+            default: 
+            $obj =  UsuarioSesiones::class;
             break;
         }
         return $obj;

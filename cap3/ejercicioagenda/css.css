@@ -26,7 +26,7 @@ h2{
     padding: 15px;
 }
 
-.boton, .cerrar, .registrar{
+.boton, .registrar{
     width: 100%;
     background-color: #00cc66;
     border-radius: 2px;
@@ -68,17 +68,18 @@ a {
     text-decoration:none;
 }
 
-.registrar, .cerrar{
+.registrar{
     width: 30%;
     margin: 0%;
     font-size: 40px;
 }
 
-.cerrar{
-   
-    text-align: center;
-}
+
 .registrar{
     text-align: center;
   
+}
+
+.cerrar{
+    float: right;
 }

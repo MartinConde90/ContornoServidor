@@ -1,14 +1,15 @@
 <?php
 
-class Usuario{
+abstract class Usuario{
 
     public function __construct(
-        private $nombre=null,
-        private $correo=null,
-        private $password=null,
-        private $rol=0,
-        $encriptar=false,
-        private $id_usuario=null,)
+        public $nombre=null,
+        public $correo=null,
+        public $password=null,
+        public $rol=0,
+        public $encriptar=false,
+        public $id_usuario=null
+        )
     {
         if($encriptar){
             $this->password = password_hash($password, PASSWORD_DEFAULT);
@@ -73,4 +74,6 @@ class Usuario{
             $this->rol = $rol;
             return $this;
         }
+
+        
 }

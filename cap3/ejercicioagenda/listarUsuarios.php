@@ -5,7 +5,11 @@ if(session_status() !== PHP_SESSION_ACTIVE){
     session_start();  
 } 
 
-$usuarios = SelectorPersistente::getUsuarioPersistente()->listar();
+if(!isset($_SESSION["id"])){
+    header("location:login.php");
+}
+$usuarios = SelectorPersistente::getUsuarioPersistenteClass()::listar();
+//$usuarios = SelectorPersistente::getUsuarioPersistente()->listar();
 /*
 if($usuarios[$_SESSION["id"]]->getRol() == 1){
 var_dump($usuarios);
@@ -33,12 +37,13 @@ var_dump($usuarios);
         <option value="nuevoUsuario.php">Añadir Usuario</option>
     </select>
     
+    <button class="cerrar" onclick="window.location.href = 'cerrarSesion.php';">Cerrar sesión</button>
     <?php 
         if($usuarios[$_SESSION["id"]]->getRol() == 1){
+            
     ?>
             <table>
                 <tr>
-                    <td>ID</td>
                     <td>nombre</td>
                     <td>Email</td>
                     <td>Rol</td>
@@ -48,7 +53,6 @@ var_dump($usuarios);
                     foreach ($usuarios as $id => $usuario) {
                 ?>
                         <tr>
-                            <td><?= $usuario->getId_usuario() ?></td>
                             <td><?= $usuario->getNombre() ?></td>
                             <td><?= $usuario->getCorreo() ?></td>
                             <td><?= $usuario->getRol() ?></td>

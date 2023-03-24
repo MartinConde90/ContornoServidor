@@ -3,13 +3,13 @@
 interface PersistentInterface{
     
 
-    function guardar($datos);
+    function guardar();
 
-    function listar();
+    static function listar();
 
-    function modificar($datos);
+    function modificar();
 
-    function eliminar($id);
+    static function eliminar($id);
 
     //function getObbjeto($id);
 }

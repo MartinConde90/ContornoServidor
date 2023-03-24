@@ -6,30 +6,31 @@ if(session_status() !== PHP_SESSION_ACTIVE){
     session_start();
 }
 
-class UsuarioMysql implements PersistentInterface{
+class UsuarioMysql extends Usuario implements PersistentInterface{
 
-    function guardar($datos){
+    function guardar(){
         
         $stm = BDMySql::getConexion()->prepare("INSERT into usuario (nombre, email, pass, rol) values(:nombre,:email,:pass,:rol)"); 
-                $stm->execute([":nombre"=>$datos->getNombre(),":email"=>$datos->getCorreo(),":pass"=>$datos->getPassword(),":rol"=>$datos->getRol()]);
+                $stm->execute([":nombre"=>$this->getNombre(),":email"=>$this->getCorreo(),":pass"=>$this->getPassword(),":rol"=>$this->getRol()]);
+                
     }
 
-    function listar(){
+    static function listar(){
         $stm = BDMySql::getConexion()->prepare("SELECT * from usuario"); //los dos puntos hacen referencia al nombre de la siguiente linea
         $stm->execute();
         $usuarios = [];
         while (($user = $stm->fetch())!=null) {
-            $usuarios[] =  new Usuario($user["nombre"],$user["email"],$user["pass"],$user["rol"],false,$user["idusuario"]);
+            $usuarios[$user["idusuario"]] =  new UsuarioMysql($user["nombre"],$user["email"],$user["pass"],$user["rol"],false,$user["idusuario"]);
         }
         return $usuarios;
     }
 
-    function modificar($datos){
+    function modificar(){
         $stm = BDMySql::getConexion()->prepare("UPDATE usuario SET nombre = :nombre , email = :email, rol = :rol where idusuario=:id");
-        $stm->execute([":nombre"=>$datos->getNombre(),":email"=>$datos->getCorreo(),":rol"=>$datos->getRol(),":id"=>$datos->getId_usuario()]);
+        $stm->execute([":nombre"=>$this->getNombre(),":email"=>$this->getCorreo(),":rol"=>$this->getRol(),":id"=>$this->getId_usuario()]);
     }
 
-    function eliminar($id){
+    static function eliminar($id){
         $stm = BDMySql::getConexion()->prepare("DELETE from usuario where idusuario = :id "); //los dos puntos hacen referencia al nombre de la siguiente linea
         $stm->execute([":id"=>$id]);
     }

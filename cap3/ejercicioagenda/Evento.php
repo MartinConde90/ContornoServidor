@@ -1,19 +1,19 @@
 <?php
 
-class Evento{
+abstract class Evento{
 
     public function __construct(
-        private $nombre=null,
-        private ?DateTime $fecha_inicio=null,
-        private ?DateTime $fecha_fin=null,
-        private $id_usuario=null,
-        private $id_evento=null
+        public $nombre=null,
+        public ?DateTime $fecha_inicio=null,
+        public ?DateTime $fecha_fin=null,
+        public $id_usuario=null,
+        public $id_evento=null
     )
     {
         /*if($this->id_evento == null){
             throw new Exception("El evento necesita un usuario asignado");
         }*/
-        if($this->fecha_fin==null){
+        if($this->fecha_fin==null && $this->fecha_inicio!= null){
             $this->fecha_fin = clone $this->fecha_inicio;
             $this->fecha_fin->modify("+ 1 hour");
         }
@@ -74,22 +74,5 @@ class Evento{
             return $this;
         }
 
-        function __serialize(): array
-    {
-        return [
-        "id_evento"=>$this->id_evento,
-        "id_usuario"=>$this->id_usuario,
-        "nombre"=>$this->nombre,
-        "fecha_inicio"=>$this->fecha_inicio,
-        "fecha_fin"=>$this->fecha_fin  ];
-    }
 
-    function __unserialize(array $data): void
-    {
-        $this->id_evento = $data["id_evento"];
-        $this->id_usuario = $data["id_usuario"];
-        $this->nombre = $data["nombre"];
-        $this->fecha_inicio = $data["fecha_inicio"];
-        $this->fecha_fin  = $data["fecha_fin"];
-    }
 }

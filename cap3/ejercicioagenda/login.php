@@ -32,11 +32,13 @@ if($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["correo"])&& isset($_POST
         $passwd = $_POST["password"];
         $_SESSION["sistemaGuardado"] = $_POST['sistemaguardar'];
 
-        $usuarios = SelectorPersistente::getUsuarioPersistente()->listar();
+        $usuarios = SelectorPersistente::getUsuarioPersistenteClass()::listar();
         //var_dump($usuarios);
-        foreach ($usuarios as $id => $usuario) {
+        //$usuarios = SelectorPersistente::getUsuarioPersistente()->listar();
 
-            if($usuario->getCorreo() == $correo && $usuario->getPassword() == $passwd){
+        foreach ($usuarios as $id => $usuario) {
+            
+            if($usuario->comprobarValidarUsuario($correo,$passwd)){
                 $_SESSION["correo"] = $correo;
                 $_SESSION["id"] = $usuario->getId_usuario();
                 header("location:index.php");
