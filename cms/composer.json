@@ -1,0 +1,20 @@
+{
+    "name": "brandon/cms",
+    "require-dev": {
+        "swiftmailer/swiftmailer": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Brandon\\Cms\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Martin Conde",
+            "email": "martincondegrande90@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.6"
+    }
+}
