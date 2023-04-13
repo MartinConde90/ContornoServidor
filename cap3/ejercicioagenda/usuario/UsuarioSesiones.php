@@ -1,6 +1,8 @@
 <?php
-require_once("PersistentInterface.php");
-require_once("Usuario.php");
+require_once(dirname(__FILE__)."/../SelectorPersistente.php");
+require_once(dirname(__FILE__)."/../usuario/Usuario.php");
+require_once(dirname(__FILE__)."/../PersistentInterface.php");
+require_once(dirname(__FILE__)."/../PersistentInterface.php");
 if(session_status() !== PHP_SESSION_ACTIVE){
     session_start();
 }

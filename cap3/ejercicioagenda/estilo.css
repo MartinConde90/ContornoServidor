@@ -90,3 +90,27 @@ table th {
   background-clip: padding-box;
   box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
 }
+.formulario>label{
+    color: white;
+}
+h1 {
+    font-size: 4em;
+    text-shadow: 0px 0px 30px black;
+    animation: neon 0.9s linear infinite;
+    color:white;
+    
+}
+
+@keyframes neon { 
+    0% {
+        text-shadow:  0 0 30px rgba(255,255,255,1) , 0 0 40px #eeff00  ;
+ 
+    }
+    100% {
+        text-shadow:  0 0 30px rgba(255,255,255,1)  , 0 0 100px rgb(5, 121, 255) ;
+    }
+}
+.intro h1 {
+    background-color: transparent;
+  }
+  

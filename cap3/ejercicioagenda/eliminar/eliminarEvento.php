@@ -1,6 +1,6 @@
 <?php
-require_once("Evento.php");
-require_once("SelectorPersistente.php");
+require_once(dirname(__FILE__)."/../evento/Evento.php");
+require_once(dirname(__FILE__)."/../SelectorPersistente.php");
 if(session_status() !== PHP_SESSION_ACTIVE){
     session_start(); 
 } 
@@ -16,5 +16,6 @@ foreach ($eventos as $key => $evento){
         //SelectorPersistente::getEventoPersistente()->eliminar($id);
     }
 }
-include("agenda.php");
+header("location:../mostrarDatos/agenda.php");
+    exit();
 

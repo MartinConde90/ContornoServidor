@@ -1,7 +1,8 @@
 <?php
-require_once("PersistentInterface.php");
-require_once("Evento.php");
-require_once("BDMongo.php");
+require_once(dirname(__FILE__)."/../evento/Evento.php");
+require_once(dirname(__FILE__)."/../SelectorPersistente.php");
+require_once(dirname(__FILE__)."/../conexion/BDMongo.php");
+require_once(dirname(__FILE__)."/../PersistentInterface.php");
 if(session_status() !== PHP_SESSION_ACTIVE){
     session_start();
 }

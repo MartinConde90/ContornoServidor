@@ -11,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST" && isset($_POST["correo"])&& isset($_POS
     $dsn = "mysql:host=localhost;dbname=usuarios";
     $usuar ="root";
     $password = "";
+    echo "tetasbuyo";
     $bd = new PDO($dsn, $usuar, $password);
     //$sql = "select * from usuario where correo='$correo' and password='$passwd' limit 1";
     //echo $sql;

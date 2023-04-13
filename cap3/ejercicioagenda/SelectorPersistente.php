@@ -2,12 +2,12 @@
 
 use function PHPSTORM_META\type;
 
-require_once("EventosSesiones.php");
-require_once("EventosMysql.php");
-require_once("EventosMongo.php");
-require_once("UsuarioSesiones.php");
-require_once("UsuarioMysql.php");
-require_once("UsuarioMongo.php");
+require_once("evento/EventosSesiones.php");
+require_once("evento/EventosMysql.php");
+require_once("evento/EventosMongo.php");
+require_once("usuario/UsuarioSesiones.php");
+require_once("usuario/UsuarioMysql.php");
+require_once("usuario/UsuarioMongo.php");
 class SelectorPersistente{
     static private  function getTipoEvento() {
         if(session_status() !== PHP_SESSION_ACTIVE){
